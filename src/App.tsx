@@ -1,17 +1,15 @@
-import React, { FC, useState }from 'react';
-import './App.css'
+import './App.css';
 
-import {CubeApp} from './lesson13-14/сube-app'
-
+import { CubeApp } from './lesson13-14/сube-app';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <CubeApp/>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <header className="App-header">
+                <CubeApp />
+            </header>
+        </div>
+    );
 }
 
 export default App;

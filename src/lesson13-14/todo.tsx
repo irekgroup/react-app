@@ -1,13 +1,12 @@
-import { useState, useEffect, FC, Fragment} from 'react';
-import styled, {css} from 'styled-components';
-
-import { useHighlightRender } from '../lesson13-14/useHighlightRender'
-import { ToDoByUserId } from '../lesson13-14/todo-by-user'
+import { useState, useEffect, FC } from 'react';
+import styled, { css } from 'styled-components';
+import { useHighlightRender } from '../lesson13-14/useHighlightRender';
+import { ToDoByUserId } from '../lesson13-14/todo-by-user';
 
 const Container = styled.div`
-    display: flex ;
+    display: flex;
     gap: 10px;
-`
+`;
 
 const CubeData = styled.div`
     display: flex;
@@ -17,58 +16,61 @@ const CubeData = styled.div`
     min-width: 200px;
     min-height: 100px;
     border: 2px solid green;
-
-`
+`;
 interface IUser {
     id: number;
     name: string;
 }
 
-const UserButton = styled.button<{$active: boolean}>(({$active}) => css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    height: 30px;
-    width: fit-content;
-    padding: 10px;
-    background: lightgray;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    transition: background-color 100ms ease-in;
+const UserButton = styled.button<{ $active: boolean }>(
+    ({ $active }) => css`
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        height: 30px;
+        width: fit-content;
+        padding: 10px;
+        background: lightgray;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        transition: background-color 100ms ease-in;
 
-    ${$active && css`
-        background: #999999;
-    `}
+        ${$active &&
+        css`
+            background: #999999;
+        `}
 
-    &:hover {
-        background: gray;
-    }
-`)
+        &:hover {
+            background: gray;
+        }
+    `
+);
 
-const ToDoApp:FC = () => {
+const ToDoApp: FC = () => {
+    const cubeRef = useHighlightRender();
 
-    const cubeRef = useHighlightRender()
-
-    const [userId, setUserId] = useState<null | number>(null)
+    const [userId, setUserId] = useState<null | number>(null);
     const [data, setData] = useState<null | IUser[]>(null);
-    const [error, setError] = useState<any>(null);
+    const [error, setError] = useState<unknown>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         setLoading(true);
-        let controller = new AbortController();
-        fetch(`https://jsonplaceholder.typicode.com/users`, {signal: controller.signal})
-            .then(response => response.json())
-            .then(data => {
+        const controller = new AbortController();
+        fetch(`https://jsonplaceholder.typicode.com/users`, {
+            signal: controller.signal,
+        })
+            .then((response) => response.json())
+            .then((data) => {
                 if (!controller.signal.aborted) {
                     setData(data);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 if (!controller.signal.aborted) {
-                    setError(error)
+                    setError(error);
                 }
             })
             .finally(() => {
@@ -76,33 +78,43 @@ const ToDoApp:FC = () => {
                     setLoading(false);
                 }
             });
-            return () => {
-                controller.abort()
-            }
+        return () => {
+            controller.abort();
+        };
     }, []);
 
+    /*   console.log(userId);
+    console.log(data);
+    console.log(error); */
+
     if (isLoading || !data) {
-        return <CubeData ref={cubeRef}>Loading...</CubeData>
+        return <CubeData ref={cubeRef}>Loading...</CubeData>;
     }
 
     if (error) {
-        return <CubeData ref={cubeRef}>Error</CubeData>
+        return <CubeData ref={cubeRef}>Error</CubeData>;
     }
 
     return (
         <Container>
             <CubeData ref={cubeRef}>
-            {data.map(user => (<UserButton
-            key={user.id}
-            $active={user.id === userId}
-            onClick={() => setUserId(
-                prevUserId => prevUserId === user.id ? null : user.id
-            )}> {user.name}
-            </UserButton> ))}
-        </CubeData>
-        <ToDoByUserId userId={userId}/>
+                {data.map((user) => (
+                    <UserButton
+                        key={user.id}
+                        $active={user.id === userId}
+                        onClick={() =>
+                            setUserId((prevUserId) =>
+                                prevUserId === user.id ? null : user.id
+                            )
+                        }>
+                        {' '}
+                        {user.name}
+                    </UserButton>
+                ))}
+            </CubeData>
+            <ToDoByUserId userId={userId} />
         </Container>
+    );
+};
 
-)}
-
-export {ToDoApp}
+export { ToDoApp };

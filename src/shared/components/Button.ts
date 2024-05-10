@@ -6,11 +6,11 @@ const Button = styled.button`
     font-size: 20px;
     font-weight: 500;
     margin-top: auto;
-    background-color: ${(props) => props.disabled ? 'grey' : 'forestgreen'};
+    background-color: ${(props) => (props.disabled ? 'grey' : 'forestgreen')};
     border: none;
-    color: ${(props) => props.disabled ? '#282c34' : 'white'};
+    color: ${(props) => (props.disabled ? '#282c34' : 'white')};
     &:hover {
-        background-color: ${(props) => props.disabled ? 'grey' : 'black'};
-}
-`
-export default Button ;
+        background-color: ${(props) => (props.disabled ? 'grey' : 'black')};
+    }
+`;
+export default Button;
