@@ -1,7 +1,8 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, FC } from 'react';
 import styled, { css } from 'styled-components';
 import { useHighlightRender } from '../lesson13-14/useHighlightRender';
 import { ToDoByUserId } from '../lesson13-14/todo-by-user';
+import { useRequest } from '../shared/api/useRequest';
 
 const Container = styled.div`
     display: flex;
@@ -48,44 +49,22 @@ const UserButton = styled.button<{ $active: boolean }>(
     `
 );
 
+interface IFetchUsersProps {
+    signal?: AbortSignal;
+}
+
+const fetchUsers = ({ signal }: IFetchUsersProps) => {
+    return fetch(`https://jsonplaceholder.typicode.com/users`, {
+        signal,
+    }).then((response) => response.json());
+};
+
 const ToDoApp: FC = () => {
     const cubeRef = useHighlightRender();
 
     const [userId, setUserId] = useState<null | number>(null);
-    const [data, setData] = useState<null | IUser[]>(null);
-    const [error, setError] = useState<unknown>(null);
-    const [isLoading, setLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        setLoading(true);
-        const controller = new AbortController();
-        fetch(`https://jsonplaceholder.typicode.com/users`, {
-            signal: controller.signal,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (!controller.signal.aborted) {
-                    setData(data);
-                }
-            })
-            .catch((error) => {
-                if (!controller.signal.aborted) {
-                    setError(error);
-                }
-            })
-            .finally(() => {
-                if (!controller.signal.aborted) {
-                    setLoading(false);
-                }
-            });
-        return () => {
-            controller.abort();
-        };
-    }, []);
-
-    /*   console.log(userId);
-    console.log(data);
-    console.log(error); */
+    const { data, error, isLoading } = useRequest<IUser[]>(fetchUsers);
 
     if (isLoading || !data) {
         return <CubeData ref={cubeRef}>Loading...</CubeData>;

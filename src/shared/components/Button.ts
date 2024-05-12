@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-    width: 100px;
-    height: 30px;
-    font-size: 20px;
+    height: 35px;
+    width: 85%;
+    padding: 0 10px;
+    margin-top: 20px;
+    border-radius: 5px;
     font-weight: 500;
-    margin-top: auto;
-    background-color: ${(props) => (props.disabled ? 'grey' : 'forestgreen')};
+    font-size: 20px;
+    cursor: pointer;
     border: none;
-    color: ${(props) => (props.disabled ? '#282c34' : 'white')};
+    background-color: ${(props) => (props.disabled ? 'grey' : 'forestgreen')};
     &:hover {
-        background-color: ${(props) => (props.disabled ? 'grey' : 'black')};
+        background-color: ${({ disabled }) =>
+            disabled ? 'gray' : 'rgb(19, 114, 19)'};
     }
 `;
-export default Button;
+
+export { Button };

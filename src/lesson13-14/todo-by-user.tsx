@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, FC } from 'react';
+import { FC } from 'react';
 import styled, { css } from 'styled-components';
 import { useHighlightRender } from '../lesson13-14/useHighlightRender';
+import { useRequest } from '../shared/api';
 
 const CubeData = styled.div`
     display: flex;
@@ -29,43 +29,33 @@ interface ITodo {
     completed: boolean;
 }
 
+interface IFetchTodoByUserId {
+    userId: number;
+}
+
+interface ISettingsProps {
+    signal?: AbortSignal;
+}
+
+const fetchTodoByUserId = (
+    { userId }: IFetchTodoByUserId,
+    { signal }: ISettingsProps
+) => {
+    return fetch(
+        `https://jsonplaceholder.typicode.com/todos?userId=${userId}`,
+        {
+            signal,
+        }
+    ).then((response) => response.json());
+};
+
 const ToDoByUserId: FC<{ userId: number | null }> = ({ userId }) => {
     const cubeRef = useHighlightRender();
 
-    const [data, setData] = useState<null | ITodo[]>(null);
-    const [error, setError] = useState<any>(null);
-    const [isLoading, setLoading] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (!userId) {
-            return;
-        }
-
-        setLoading(true);
-        const controller = new AbortController();
-        fetch(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`, {
-            signal: controller.signal,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (!controller.signal.aborted) {
-                    setData(data);
-                }
-            })
-            .catch((error) => {
-                if (!controller.signal.aborted) {
-                    setError(error);
-                }
-            })
-            .finally(() => {
-                if (!controller.signal.aborted) {
-                    setLoading(false);
-                }
-            });
-        return () => {
-            controller.abort();
-        };
-    }, [userId]);
+    const { isLoading, data, error } = useRequest<ITodo[]>(
+        userId && fetchTodoByUserId,
+        [{ userId }]
+    );
 
     if (!userId) {
         return <CubeData ref={cubeRef}>Пользователь не выбран</CubeData>;
