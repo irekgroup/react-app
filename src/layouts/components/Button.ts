@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 const Button = styled.button`
     height: 35px;
-    width: 85%;
-    padding: 0 10px;
-    margin-top: 20px;
     border-radius: 5px;
     font-weight: 500;
     font-size: 20px;
+    color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
     cursor: pointer;
     border: none;
     background-color: ${(props) => (props.disabled ? 'grey' : 'forestgreen')};

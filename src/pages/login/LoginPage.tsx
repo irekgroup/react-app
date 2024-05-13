@@ -1,19 +1,17 @@
 import { FC } from 'react';
 
-import { Input, Button, Form, Page, Tittle } from '../../shared/components';
+import { Input, Button, Form, Tittle } from '../../layouts/components';
 
 const LoginPage: FC = () => {
     return (
-        <Page>
+        <Form>
             <Form>
                 <Tittle>Авторизация</Tittle>
-                <Form>
-                    <Input label={'Логин'} tittle="Логин" />
-                    <Input label={'Пароль'} type={'password'} />
-                    <Button type="submit">Войти</Button>
-                </Form>
+                <Input label={'Логин'} tittle="Логин" />
+                <Input label={'Пароль'} type={'password'} />
+                <Button type="submit">Войти</Button>
             </Form>
-        </Page>
+        </Form>
     );
 };
 

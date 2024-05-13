@@ -5,6 +5,4 @@ import { Form } from './Form';
 
 export { Button } from './Button';
 
-export { Panel } from './Panel';
-
 export { Page, Tittle, Input, Form };

@@ -5,7 +5,7 @@ const StyledInput = styled.input.attrs((props) => ({
 }))`
     height: 35px;
     width: 100%;
-    padding: 0 0px;
+    margin-bottom: 10px;
     border-radius: 5px;
     font-weight: 400;
     font-size: 20px;
@@ -19,7 +19,7 @@ const StyledLabel = styled.span`
     font-size: 14px;
     font-weight: 400;
     color: #282c34;
-    margin-bottom: 8px;
+    margin-bottom: 1px;
 `;
 
 const Container = styled.span`
