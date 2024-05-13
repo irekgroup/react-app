@@ -10,8 +10,8 @@ const lightColors = {
     },
 
     primary: {
-        main: '#a77e53',
-        dark: '#a17149',
+        main: '#2d55c3',
+        dark: '#6270d6',
         light: '#e9dfbf',
         disabled: '#a29381',
     },

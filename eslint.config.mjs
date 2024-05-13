@@ -24,6 +24,7 @@ const settings = [
             'react/prop-types': 'off',
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/no-unnecessary-type-constraint': 'off',
+            '@typescript-eslint/no-unused-vars': 'off',
         },
     },
 ];

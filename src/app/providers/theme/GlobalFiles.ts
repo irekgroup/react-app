@@ -19,6 +19,9 @@ const globalStyles = css`
             outline: none;
         }
     }
+    button {
+        border: none;
+    }
 `;
 
 const GlobalStyles = createGlobalStyle`${globalStyles}`;
