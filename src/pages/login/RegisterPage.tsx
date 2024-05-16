@@ -1,44 +1,41 @@
 import { FC, useCallback, useState } from 'react';
-/* import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; */
-import { useLocation, useNavigate } from 'react-router-dom';
+/* import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'; */
+import { useNavigate } from 'react-router-dom';
+
 import { Panel, Tittle, Input, Button } from '../../layouts/components';
 import { CenteredPage, GuestLayout } from '../../layouts';
 import { EButtonVariant } from '../../layouts/components/Button';
-import { EAboutAppRoutes } from '../../shared/routes/interfaces/interface';
-import localStorageManager from '../../shared/localStorage/localStorageManager';
-import { AUTH_TOKEN } from '../../shared/hooks/userAuth/constants';
+/* import localStorageManager from '../../shared/localStorage/localStorageManager'; */
 
-const loginFake = () => {
-    return new Promise((res) =>
-        setTimeout(() => {
-            res({ auth_token: 'sdfsdf' });
-        })
-    );
-};
-
-const LoginPage: FC = () => {
+const RegisterPage: FC = () => {
     const [login, setLogin] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const handleLogIn = useCallback(async () => {
-        const creds = await loginFake();
+    const handleRegister = useCallback(async () => {
+        try {
+            /* const auth = getAuth();
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                login,
+                password
+            ); */
+            /* const user = userCredential.user;
+            const userRefreshToken = user.refreshToken;
 
-        localStorageManager.setValue(
-            AUTH_TOKEN,
-            (creds as { auth_token: string }).auth_token
-        );
-        console.log(location);
-        navigate(location.state.goToAfterLogin || '/health/profile');
-    }, [login, password, localStorageManager]);
+            localStorageManager.setValue('auth_token', userRefreshToken); */
+
+            navigate('/health/profile');
+        } catch (error) {
+            console.log(error);
+        }
+    }, [login, password]);
 
     return (
         <GuestLayout>
             <CenteredPage>
                 <Panel>
-                    <Tittle>Авторизация</Tittle>
+                    <Tittle>Регистрация</Tittle>
                     <form>
                         <Input
                             value={login}
@@ -53,9 +50,9 @@ const LoginPage: FC = () => {
                         />
                     </form>
                     <Button
+                        onClick={handleRegister}
                         type="submit"
-                        variant={EButtonVariant.FILLED}
-                        onClick={handleLogIn}>
+                        variant={EButtonVariant.FILLED}>
                         Войти
                     </Button>
                 </Panel>
@@ -63,4 +60,5 @@ const LoginPage: FC = () => {
         </GuestLayout>
     );
 };
-export default LoginPage;
+
+export default RegisterPage;

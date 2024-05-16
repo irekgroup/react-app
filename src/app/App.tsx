@@ -1,22 +1,12 @@
 import { FC } from 'react';
 
-import { LoginPage } from '../pages/login/LoginPage';
-
-import { GuestLayout } from '../layouts';
 import { Providers } from './providers';
-
-function AppInner() {
-    return (
-        <GuestLayout>
-            <LoginPage />
-        </GuestLayout>
-    );
-}
+import CheckUserAuth from './userCheck/CheckUserAuth';
 
 const App: FC = () => {
     return (
         <Providers>
-            <AppInner />
+            <CheckUserAuth />
         </Providers>
     );
 };

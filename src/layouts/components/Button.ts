@@ -1,9 +1,12 @@
 import styled, { css, StyleFunction } from 'styled-components';
 
-type ButtonVariant = 'filled' | 'outline';
+export enum EButtonVariant {
+    FILLED = 'filled',
+    OUTLINE = 'outline',
+}
 
 interface IButtonProps {
-    variant?: ButtonVariant;
+    variant?: EButtonVariant;
 }
 
 const variantFn: StyleFunction<IButtonProps> = ({
@@ -45,15 +48,10 @@ const variantFn: StyleFunction<IButtonProps> = ({
 
 const Button = styled.button<IButtonProps>(
     ({ theme: { fontSize, borderRadius } }) => css`
-        display: flex;
-        align-items: center;
         height: 40px;
-        padding: 10px;
         border-radius: ${borderRadius.m};
         font-weight: 500;
         font-size: ${fontSize.m};
-        padding-left: 10px;
-        padding-right: 10px;
         cursor: pointer;
         transition:
             background 100ms ease-in-out,
