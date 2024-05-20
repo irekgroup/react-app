@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 import { ELoginRoutes, TRoutesMap } from './interfaces/interface';
 
-export const loginRoutes: TRoutesMap<ELoginRoutes> = [
+export const loginRoutes: TRoutesMap = [
     {
         name: 'userLogin',
         path: ELoginRoutes.LOGIN_PAGE,

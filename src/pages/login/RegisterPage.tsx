@@ -32,32 +32,32 @@ const RegisterPage: FC = () => {
     }, [login, password]);
 
     return (
-        <GuestLayout>
-            <CenteredPage>
-                <Panel>
-                    <Tittle>Регистрация</Tittle>
-                    <form>
-                        <Input
-                            value={login}
-                            onChange={setLogin}
-                            label={'Логин'}
-                        />
-                        <Input
-                            label={'Пароль'}
-                            type={'password'}
-                            value={password}
-                            onChange={setPassword}
-                        />
-                    </form>
-                    <Button
-                        onClick={handleRegister}
-                        type="submit"
-                        variant={EButtonVariant.FILLED}>
-                        Войти
-                    </Button>
-                </Panel>
-            </CenteredPage>
-        </GuestLayout>
+        <CenteredPage>
+            <Panel>
+                <Tittle>Регистрация</Tittle>
+                <form>
+                    <Input value={login} onChange={setLogin} label={'Логин'} />
+                    <Input
+                        label={'Пароль'}
+                        type={'password'}
+                        value={password}
+                        onChange={setPassword}
+                    />
+                    <Input
+                        label={'Повторите пароль'}
+                        type={'password'}
+                        value={password}
+                        onChange={setPassword}
+                    />
+                </form>
+                <Button
+                    onClick={handleRegister}
+                    type="submit"
+                    variant={EButtonVariant.FILLED}>
+                    Войти
+                </Button>
+            </Panel>
+        </CenteredPage>
     );
 };
 
