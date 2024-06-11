@@ -1,20 +1,23 @@
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Button, Container } from '../layouts/components';
 import { Avatar } from '../layouts/components/avatar';
 
 import { Header, LayoutContainer } from './components';
-import { IUser } from '../shared/types/user';
+import { Gender, IUser } from '../shared/types/user';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ANALYZES, MED_CARD_ROUTS } from '../shared/routes';
 
-import { useAuthUpdater } from '../app/entities/auth/useAuthUpdater';
 import { ANALYZE_MODAL_TYPE } from '../app/entities/analyze';
 import { useModalController } from '../shared/modal';
+import { setUserAuth } from '../app/entities/auth/model/reducer';
+import { setUser } from '../app/entities/user/model/reducer';
 
-const MOCK_USER: IUser = {
+export const MOCK_USER: IUser = {
     name: 'Иванов Иван Иванович',
+    gender: Gender.male,
     email: 'ivanov@mail.com',
 };
 
@@ -31,10 +34,17 @@ const MenuNavigationItem = styled(Link)`
 `;
 
 const UserLayout: FC<PropsWithChildren> = ({ children }) => {
+    const dispatch = useDispatch();
     const user = MOCK_USER;
-    const setAuth = useAuthUpdater();
 
     const { onModalOpen } = useModalController();
+
+    const handleLogOut = useCallback(() => {
+        // Отключает авторизацию пользователя
+        dispatch(setUserAuth(false));
+        // Сбрасывает информацию о пользователе
+        dispatch(setUser(null));
+    }, [dispatch]);
 
     return (
         <LayoutContainer>
@@ -61,8 +71,8 @@ const UserLayout: FC<PropsWithChildren> = ({ children }) => {
                     alignItems="center"
                     gap={10}
                     ml="auto"
-                    onClick={() => setAuth(false)}>
-                    {user.name ?? user.email}
+                    onClick={handleLogOut}>
+                    {user!.name ?? user!.email}
                     <Avatar />
                 </Container>
             </Header>

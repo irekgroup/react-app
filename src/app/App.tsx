@@ -2,18 +2,16 @@ import { FC, Suspense } from 'react';
 
 import { GuestLayout } from '../layouts';
 import { Providers } from './providers';
-import { useCheckUserAuth } from '../shared/hooks/userAuth/useCheckUserAuth';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { guestRoutesMap, userRoutesMap } from '../shared/routes/routes';
 import { UserLayout } from '../layouts/UserLayout';
-import { useAuth } from './entities/auth';
+
 import { ModalController } from '../shared/modal';
 import { ANALYZE_MODAL_TYPE, AnalyzeModal } from './entities/analyze';
+import { useIsAuth } from './entities/auth/model/selectors';
 
 const AppInner: FC = () => {
-    useCheckUserAuth();
-
-    const isAuth = useAuth();
+    const isAuth = useIsAuth();
 
     if (isAuth) {
         return (
