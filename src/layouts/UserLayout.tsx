@@ -14,12 +14,7 @@ import { ANALYZE_MODAL_TYPE } from '../app/entities/analyze';
 import { useModalController } from '../shared/modal';
 import { setUserAuth } from '../app/entities/auth/model/reducer';
 import { setUser } from '../app/entities/user/model/reducer';
-
-export const MOCK_USER: IUser = {
-    name: 'Иванов Иван Иванович',
-    gender: Gender.male,
-    email: 'ivanov@mail.com',
-};
+import { useUser } from '../app/entities/user';
 
 const MenuNavigation = styled.nav`
     display: flex;
@@ -35,8 +30,9 @@ const MenuNavigationItem = styled(Link)`
 
 const UserLayout: FC<PropsWithChildren> = ({ children }) => {
     const dispatch = useDispatch();
-    const user = MOCK_USER;
+    const user = useUser();
 
+    console.log(user);
     const { onModalOpen } = useModalController();
 
     const handleLogOut = useCallback(() => {

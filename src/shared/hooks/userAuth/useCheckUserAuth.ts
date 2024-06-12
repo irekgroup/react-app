@@ -5,13 +5,13 @@ import localStorageManager from '../../localStorage/localStorageManager';
 
 import { PUBLIC_ROUTES } from '../../routes/routes';
 
-import { AUTH_TOKEN } from './constants';
+import { AUTH_REFRESH_TOKEN } from './constants';
 import { ELoginRoutes } from '../../routes';
 
 export const useCheckUserAuth = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const authToken = localStorageManager.getValue(AUTH_TOKEN);
+    const authToken = localStorageManager.getValue(AUTH_REFRESH_TOKEN);
 
     const isPublicRoute = useMemo(
         () => PUBLIC_ROUTES.some((route) => route === location.pathname),

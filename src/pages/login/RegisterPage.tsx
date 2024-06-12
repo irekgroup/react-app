@@ -1,11 +1,12 @@
 import { FC, useCallback, useState } from 'react';
-/* import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'; */
+
 import { useNavigate } from 'react-router-dom';
 
 import { Panel, Tittle, Input, Button } from '../../layouts/components';
 import { CenteredPage, GuestLayout } from '../../layouts';
 import { EButtonVariant } from '../../layouts/components/Button';
-/* import localStorageManager from '../../shared/localStorage/localStorageManager'; */
+import { signInEmailAndPassword } from './api/auth.api';
+import localStorageManager from '../../shared/localStorage/localStorageManager';
 
 const RegisterPage: FC = () => {
     const [login, setLogin] = useState<string>('');
@@ -14,16 +15,12 @@ const RegisterPage: FC = () => {
 
     const handleRegister = useCallback(async () => {
         try {
-            /* const auth = getAuth();
-            const userCredential = await createUserWithEmailAndPassword(
-                auth,
-                login,
-                password
-            ); */
-            /* const user = userCredential.user;
-            const userRefreshToken = user.refreshToken;
+            const { refreshToken } = await signInEmailAndPassword({
+                email: login,
+                password,
+            });
 
-            localStorageManager.setValue('auth_token', userRefreshToken); */
+            localStorageManager.setValue('auth_token', refreshToken);
 
             navigate('/health/profile');
         } catch (error) {
