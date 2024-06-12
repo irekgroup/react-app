@@ -12,8 +12,9 @@ import { setUser } from '../../app/entities/user/model/reducer';
 import { setUserAuth } from '../../app/entities/auth/model/reducer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchUser, signInEmailAndPassword } from './api/auth.api';
-import { AUTH_REFRESH_TOKEN } from '../../shared/hooks/userAuth/constants';
 import { STARTING_PAGE_ROUT } from '../../shared/routes';
+import { REFRESH_TOKEN_LS_KEY } from '../../app/entities/auth';
+import { USER_DATA_LS_KEY } from '../../app/entities/user';
 
 const LoginPage: FC = () => {
     const dispatch = useDispatch();
@@ -33,7 +34,8 @@ const LoginPage: FC = () => {
 
             const user = await fetchUser({ email: login });
 
-            localStorageManager.setValue(AUTH_REFRESH_TOKEN, refreshToken);
+            localStorageManager.setValue(REFRESH_TOKEN_LS_KEY, refreshToken);
+            localStorageManager.setValue(USER_DATA_LS_KEY, user);
 
             dispatch(setUserAuth(true));
             dispatch(setUser(user));

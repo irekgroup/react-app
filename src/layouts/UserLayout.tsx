@@ -14,7 +14,9 @@ import { ANALYZE_MODAL_TYPE } from '../app/entities/analyze';
 import { useModalController } from '../shared/modal';
 import { setUserAuth } from '../app/entities/auth/model/reducer';
 import { setUser } from '../app/entities/user/model/reducer';
-import { useUser } from '../app/entities/user';
+import { USER_DATA_LS_KEY, useUser } from '../app/entities/user';
+import localStorageManager from '../shared/localStorage/localStorageManager';
+import { REFRESH_TOKEN_LS_KEY } from '../app/entities/auth';
 
 const MenuNavigation = styled.nav`
     display: flex;
@@ -40,6 +42,8 @@ const UserLayout: FC<PropsWithChildren> = ({ children }) => {
         dispatch(setUserAuth(false));
         // Сбрасывает информацию о пользователе
         dispatch(setUser(null));
+        localStorageManager.removeValue(REFRESH_TOKEN_LS_KEY);
+        localStorageManager.removeValue(USER_DATA_LS_KEY);
     }, [dispatch]);
 
     return (
