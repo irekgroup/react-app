@@ -10,6 +10,8 @@ import { Modal } from './modal/Modal';
 
 export { Button } from './Button';
 
+export { Dropdown } from './dropdown/Dropdown';
+
 export {
     Page,
     Tittle,
